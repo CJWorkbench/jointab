@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-02-19 09:05+0000\n"
+"POT-Creation-Date: 2020-02-19 09:08+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: el\n"
@@ -20,23 +20,23 @@ msgstr ""
 "Generated-By: Babel 2.8.0\n"
 
 msgid "_spec.name"
-msgstr ""
+msgstr "Ένωση καρτελών"
 
 msgid "_spec.description"
-msgstr ""
+msgstr "Ένωση δεδομένων με χρήση στηλών που είναι κοινές σε δύο καρτέλες."
 
 msgid "_spec.parameters.right_tab.placeholder"
-msgstr ""
+msgstr "Επιλέξτε καρτέλα για ένωση"
 
 msgid "_spec.parameters.type.name"
-msgstr ""
+msgstr "Τύπος ένωσης"
 
 msgid "_spec.parameters.type.options.left.label"
-msgstr ""
+msgstr "Αριστερή"
 
 msgid "_spec.parameters.type.options.inner.label"
-msgstr ""
+msgstr "Εσωτερική"
 
 msgid "_spec.parameters.type.options.right.label"
-msgstr ""
+msgstr "Δεξιά"
 
