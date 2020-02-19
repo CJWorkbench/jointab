@@ -1,0 +1,28 @@
+#. default-message: Join tab
+msgid "_spec.name"
+msgstr ""
+
+#. default-message: Join data using shared columns between two tabs.
+msgid "_spec.description"
+msgstr ""
+
+#. default-message: Select tab to join
+msgid "_spec.parameters.right_tab.placeholder"
+msgstr ""
+
+#. default-message: Join type
+msgid "_spec.parameters.type.name"
+msgstr ""
+
+#. default-message: Left
+msgid "_spec.parameters.type.options.left.label"
+msgstr ""
+
+#. default-message: Inner
+msgid "_spec.parameters.type.options.inner.label"
+msgstr ""
+
+#. default-message: Right
+msgid "_spec.parameters.type.options.right.label"
+msgstr ""
+
