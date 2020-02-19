@@ -5,6 +5,7 @@ import numpy as np
 import pandas as pd
 from pandas.testing import assert_frame_equal
 from jointab import migrate_params, render
+from cjwmodule.testing.i18n import i18n_message
 
 
 @dataclass(frozen=True)
@@ -180,9 +181,14 @@ class JoinTabTests(unittest.TestCase):
 
         self.assertEqual(
             result,
-            (
-                'Column "A" is *number* in this tab and *text* in Tab 2. '
-                "Please convert one or the other so they are both the same type."
+            i18n_message(
+                "error.differentColumnTypes",
+                {
+                    "column_name": "A",
+                    "left_type": "number",
+                    "right_type": "text",
+                    "other_tab_name": "Tab 2",
+                },
             ),
         )
 
@@ -212,10 +218,9 @@ class JoinTabTests(unittest.TestCase):
 
         self.assertEqual(
             result,
-            (
-                'You tried to add "B" from Tab 2, but your table already has that '
-                "column. Please rename the column in one of the tabs, or unselect "
-                "the column."
+            i18n_message(
+                "error.columnAlreadyExists",
+                {"column_name": "B", "other_tab_name": "Tab 2"},
             ),
         )
 

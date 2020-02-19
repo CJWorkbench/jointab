@@ -26,3 +26,13 @@ msgstr ""
 msgid "_spec.parameters.type.options.right.label"
 msgstr ""
 
+#. default-message: Column "{column_name}" is *{left_type}* in this tab and *{right_type}* in {other_tab_name}. Please convert one or the other so they are both the same type.
+#: jointab.py:39
+msgid "error.differentColumnTypes"
+msgstr ""
+
+#. default-message: You tried to add "{column_name}" from {other_tab_name}, but your table already has that column. Please rename the column in one of the tabs, or unselect the column.
+#: jointab.py:55
+msgid "error.columnAlreadyExists"
+msgstr ""
+

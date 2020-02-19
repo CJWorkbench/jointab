@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-02-19 09:08+0000\n"
+"POT-Creation-Date: 2020-02-19 09:11+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: el\n"
@@ -39,4 +39,12 @@ msgstr "Εσωτερική"
 
 msgid "_spec.parameters.type.options.right.label"
 msgstr "Δεξιά"
+
+#: jointab.py:39
+msgid "error.differentColumnTypes"
+msgstr ""
+
+#: jointab.py:55
+msgid "error.columnAlreadyExists"
+msgstr ""
 
