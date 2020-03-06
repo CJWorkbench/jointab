@@ -43,8 +43,15 @@ msgstr "Δεξιά"
 #: jointab.py:39
 msgid "error.differentColumnTypes"
 msgstr ""
+"Η στήλη \"{column_name}\" είναι *{left_type}* σε αυτή την καρτέλα και "
+"*{right_type}* στην καρτέλα {other_tab_name}. Μετατρέψτε τη μία από τις δύο "
+"στήλες ώστε να είναι του ίδιου τύπου."
 
 #: jointab.py:55
 msgid "error.columnAlreadyExists"
 msgstr ""
+"Προσπαθήσατε να προσθέσετε τη στήλη \"{column_name}\" από την καρτέλα "
+"{other_tab_name}, αλλά ο πίνακάς σας έχει ήδη στήλη με αυτό το όνομα. "
+"Μετονομάστε τη στήλη σε μια από τις καρτέλες ή καταργήστε την επιλογή της "
+"στήλης."
 
