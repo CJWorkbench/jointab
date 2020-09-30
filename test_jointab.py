@@ -14,14 +14,14 @@ class RenderColumn:
     Column presented to a render() function in its `input_columns` argument.
 
     A column has a `name` and a `type`. The `type` is one of "number", "text"
-    or "datetime".
+    or "timestamp".
     """
 
     name: str
     """Column name in the DataFrame."""
 
     type: str
-    """'number', 'text' or 'datetime'."""
+    """'number', 'text' or 'timestamp'."""
 
     format: Optional[str]
     """
