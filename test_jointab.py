@@ -79,7 +79,11 @@ class MigrateTests(unittest.TestCase):
             ),
             {
                 "right_tab": "tab-1",
-                "join_columns": {"on": ["A", "B"], "right": ["C", "D"]},
+                "join_columns": {
+                    "on": ["A", "B"],
+                    "right": ["C", "D"],
+                    "rightAll": False,
+                },
                 "type": "left",
             },
         )
@@ -95,7 +99,7 @@ class MigrateTests(unittest.TestCase):
             ),
             {
                 "right_tab": "tab-1",
-                "join_columns": {"on": [], "right": []},
+                "join_columns": {"on": [], "right": [], "rightAll": False},
                 "type": "left",
             },
         )
@@ -111,7 +115,35 @@ class MigrateTests(unittest.TestCase):
             ),
             {
                 "right_tab": "tab-1",
-                "join_columns": {"on": ["A", "B"], "right": ["C", "D"]},
+                "join_columns": {
+                    "on": ["A", "B"],
+                    "right": ["C", "D"],
+                    "rightAll": False,
+                },
+                "type": "inner",
+            },
+        )
+
+    def test_v2(self):
+        self.assertEqual(
+            migrate_params(
+                {
+                    "right_tab": "tab-1",
+                    "join_columns": {
+                        "on": ["A", "B"],
+                        "right": ["C", "D"],
+                        "rightAll": False,
+                    },
+                    "type": "inner",
+                }
+            ),
+            {
+                "right_tab": "tab-1",
+                "join_columns": {
+                    "on": ["A", "B"],
+                    "right": ["C", "D"],
+                    "rightAll": False,
+                },
                 "type": "inner",
             },
         )
@@ -134,7 +166,7 @@ class JoinTabTests(unittest.TestCase):
                     },
                     right,
                 ),
-                "join_columns": {"on": ["A"], "right": ["C", "D"]},
+                "join_columns": {"on": ["A"], "right": ["C", "D"], "rightAll": False},
                 "type": "left",
             },
             input_columns={
@@ -170,7 +202,7 @@ class JoinTabTests(unittest.TestCase):
                     },
                     right,
                 ),
-                "join_columns": {"on": ["A"], "right": ["C"]},
+                "join_columns": {"on": ["A"], "right": ["C"], "rightAll": False},
                 "type": "left",
             },
             input_columns={
@@ -207,7 +239,7 @@ class JoinTabTests(unittest.TestCase):
                     },
                     right,
                 ),
-                "join_columns": {"on": ["A"], "right": ["B"]},
+                "join_columns": {"on": ["A"], "right": ["B"], "rightAll": False},
                 "type": "left",
             },
             input_columns={
@@ -244,7 +276,7 @@ class JoinTabTests(unittest.TestCase):
                     },
                     right,
                 ),
-                "join_columns": {"on": ["A"], "right": ["B"]},
+                "join_columns": {"on": ["A"], "right": ["B"], "rightAll": False},
                 "type": "left",
             },
             input_columns={"A": RenderColumn("A", "text", None)},
@@ -259,6 +291,35 @@ class JoinTabTests(unittest.TestCase):
                     "B": pd.Series(["x", np.nan], dtype="category"),
                 }
             ),
+        )
+
+    def test_zero_columns_added(self):
+        left = pd.DataFrame({"A": [1, 2, 3], "B": ["x", "y", "z"]})
+        right = pd.DataFrame({"A": [1, 2], "B": [1, 1], "C": ["X", "Y"]})
+        result = render(
+            left,
+            {
+                "right_tab": TabOutput(
+                    "slug",
+                    "Tab 2",
+                    {
+                        "A": RenderColumn("A", "number", "{}"),
+                        "B": RenderColumn("B", "number", "{}"),
+                        "C": RenderColumn("C", "text", None),
+                    },
+                    right,
+                ),
+                "join_columns": {"on": ["A"], "right": [], "rightAll": False},
+                "type": "inner",
+            },
+            input_columns={
+                "A": RenderColumn("A", "number", "{}"),
+                "B": RenderColumn("B", "text", None),
+            },
+        )
+        assert_frame_equal(
+            result["dataframe"],
+            pd.DataFrame({"A": [1, 2], "B": ["x", "y"]}),
         )
 
     def test_right_join_delete_unused_categories_in_input_columns(self):
@@ -283,7 +344,7 @@ class JoinTabTests(unittest.TestCase):
                     },
                     right,
                 ),
-                "join_columns": {"on": ["A"], "right": ["C"]},
+                "join_columns": {"on": ["A"], "right": ["C"], "rightAll": False},
                 "type": "right",
             },
             input_columns={
@@ -329,7 +390,7 @@ class JoinTabTests(unittest.TestCase):
                     },
                     right,
                 ),
-                "join_columns": {"on": ["A"], "right": ["C"]},
+                "join_columns": {"on": ["A"], "right": ["C"], "rightAll": False},
                 "type": "inner",
             },
             input_columns={
@@ -342,4 +403,87 @@ class JoinTabTests(unittest.TestCase):
         assert_frame_equal(
             result["dataframe"],
             pd.DataFrame({"A": ["a"], "B": ["c"], "C": ["e"]}, dtype="category"),
+        )
+
+    def test_right_all(self):
+        left = pd.DataFrame({"A": [1, 2, 3], "B": ["x", "y", "z"]})
+        right = pd.DataFrame({"A": [1, 2], "C": ["X", "Y"]})
+        result = render(
+            left,
+            {
+                "right_tab": TabOutput(
+                    "slug",
+                    "Tab 2",
+                    {
+                        "A": RenderColumn("A", "number", "{}"),
+                        "C": RenderColumn("C", "text", None),
+                    },
+                    right,
+                ),
+                # params["join_columns"]["right"] is ignored
+                "join_columns": {"on": ["A"], "right": ["B"], "rightAll": True},
+                "type": "inner",
+            },
+            input_columns={
+                "A": RenderColumn("A", "number", "{}"),
+                "B": RenderColumn("B", "text", None),
+            },
+        )
+        assert_frame_equal(
+            result["dataframe"],
+            pd.DataFrame({"A": [1, 2], "B": ["x", "y"], "C": ["X", "Y"]}),
+        )
+
+    def test_right_all_ignore_column_of_same_name(self):
+        left = pd.DataFrame({"A": [1, 2, 3], "B": ["x", "y", "z"]})
+        right = pd.DataFrame({"A": [1, 2], "B": [1, 1], "C": ["X", "Y"]})
+        result = render(
+            left,
+            {
+                "right_tab": TabOutput(
+                    "slug",
+                    "Tab 2",
+                    {
+                        "A": RenderColumn("A", "number", "{}"),
+                        "B": RenderColumn("B", "number", "{}"),
+                        "C": RenderColumn("C", "text", None),
+                    },
+                    right,
+                ),
+                "join_columns": {"on": ["A"], "right": [], "rightAll": True},
+                "type": "inner",
+            },
+            input_columns={
+                "A": RenderColumn("A", "number", "{}"),
+                "B": RenderColumn("B", "text", None),
+            },
+        )
+        assert_frame_equal(
+            result["dataframe"],
+            pd.DataFrame({"A": [1, 2], "B": ["x", "y"], "C": ["X", "Y"]}),
+        )
+
+    def test_right_all_zero_columns_added(self):
+        left = pd.DataFrame({"A": [1, 2, 3], "B": ["x", "y", "z"]})
+        right = pd.DataFrame({"A": [1, 2]})
+        result = render(
+            left,
+            {
+                "right_tab": TabOutput(
+                    "slug",
+                    "Tab 2",
+                    {"A": RenderColumn("A", "number", "{}")},
+                    right,
+                ),
+                "join_columns": {"on": ["A"], "right": [], "rightAll": True},
+                "type": "inner",
+            },
+            input_columns={
+                "A": RenderColumn("A", "number", "{}"),
+                "B": RenderColumn("B", "text", None),
+            },
+        )
+        assert_frame_equal(
+            result["dataframe"],
+            pd.DataFrame({"A": [1, 2], "B": ["x", "y"]}),
         )

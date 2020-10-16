@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-02-19 09:11+0000\n"
+"POT-Creation-Date: 2020-10-16 14:29+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -40,14 +40,14 @@ msgstr "Inner"
 msgid "_spec.parameters.type.options.right.label"
 msgstr "Right"
 
-#: jointab.py:39
+#: jointab.py:46
 msgid "error.differentColumnTypes"
 msgstr ""
 "Column \"{column_name}\" is *{left_type}* in this tab and *{right_type}* "
 "in {other_tab_name}. Please convert one or the other so they are both the"
 " same type."
 
-#: jointab.py:55
+#: jointab.py:62
 msgid "error.columnAlreadyExists"
 msgstr ""
 "You tried to add \"{column_name}\" from {other_tab_name}, but your table "

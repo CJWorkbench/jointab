@@ -1,8 +1,8 @@
-from typing import List, Set
+from typing import FrozenSet, List
 from cjwmodule import i18n
 
 
-def _parse_colnames(val: List[str], valid: Set[str]):
+def _parse_colnames(val: List[str], valid: FrozenSet[str]) -> List[str]:
     return [c for c in val if c in valid]
 
 
@@ -18,14 +18,21 @@ def render(table, params, *, input_columns):
         # Workbench doesn't test whether the 'on' columns are in
         # right_dataframe, but the UI does so we can just ignore any invalid
         # columns and call it a day.
-        set(table.columns & right_dataframe.columns),
+        frozenset(table.columns & right_dataframe.columns),
     )
-    right_columns_set = set(
-        _parse_colnames(
-            params["join_columns"]["right"],
-            set(right_dataframe.columns).difference(set(on_columns)),
+    on_columns_set = frozenset(on_columns)
+    if params["join_columns"]["rightAll"]:
+        allowed_right_columns_set = frozenset(right_dataframe.columns).difference(
+            frozenset(table.columns)
         )
-    )
+        right_columns_set = allowed_right_columns_set
+    else:
+        right_columns_set = frozenset(
+            _parse_colnames(
+                params["join_columns"]["right"],
+                frozenset(right_dataframe.columns).difference(on_columns_set),
+            )
+        )
     # order right_columns as they're ordered in right_dataframe
     right_columns = [c for c in right_dataframe.columns if c in right_columns_set]
 
@@ -130,7 +137,14 @@ def _migrate_params_v0_to_v1(params):
     }
 
 
+def _migrate_params_v1_to_v2(params):
+    """v1: missing 'rightAll'; v2 has it (False for backwards-compat)."""
+    return {**params, "join_columns": {**params["join_columns"], "rightAll": False}}
+
+
 def migrate_params(params):
     if isinstance(params["type"], int):
         params = _migrate_params_v0_to_v1(params)
+    if "rightAll" not in params["join_columns"]:
+        params = _migrate_params_v1_to_v2(params)
     return params

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-02-19 09:11+0000\n"
+"POT-Creation-Date: 2020-10-16 14:29+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: el\n"
@@ -40,18 +40,18 @@ msgstr "Εσωτερική"
 msgid "_spec.parameters.type.options.right.label"
 msgstr "Δεξιά"
 
-#: jointab.py:39
+#: jointab.py:46
 msgid "error.differentColumnTypes"
 msgstr ""
 "Η στήλη \"{column_name}\" είναι *{left_type}* σε αυτή την καρτέλα και "
-"*{right_type}* στην καρτέλα {other_tab_name}. Μετατρέψτε τη μία από τις δύο "
-"στήλες ώστε να είναι του ίδιου τύπου."
+"*{right_type}* στην καρτέλα {other_tab_name}. Μετατρέψτε τη μία από τις "
+"δύο στήλες ώστε να είναι του ίδιου τύπου."
 
-#: jointab.py:55
+#: jointab.py:62
 msgid "error.columnAlreadyExists"
 msgstr ""
 "Προσπαθήσατε να προσθέσετε τη στήλη \"{column_name}\" από την καρτέλα "
 "{other_tab_name}, αλλά ο πίνακάς σας έχει ήδη στήλη με αυτό το όνομα. "
-"Μετονομάστε τη στήλη σε μια από τις καρτέλες ή καταργήστε την επιλογή της "
-"στήλης."
+"Μετονομάστε τη στήλη σε μια από τις καρτέλες ή καταργήστε την επιλογή της"
+" στήλης."
 
