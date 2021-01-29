@@ -14,7 +14,6 @@ param_schema:
       right: { type: multicolumn, tab_parameter: right_tab }
       # rightAll: if true, dynamically add all non-conflicting columns
       rightAll: { type: boolean, default: true }
-parameters_version: 1
 parameters:
   - id_name: right_tab
     type: tab
